@@ -23,7 +23,7 @@ public class MediaEntity {
         width = jsonObject.getInt("width");
         type = jsonObject.getString("type");
         subType = jsonObject.getString("subtype");
-        caption = jsonObject.getString("capton");
+        caption = jsonObject.getString("caption");
         copyright = jsonObject.getString("copyright");
     }
 
