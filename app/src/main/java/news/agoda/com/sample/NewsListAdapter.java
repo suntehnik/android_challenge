@@ -1,7 +1,6 @@
 package news.agoda.com.sample;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import com.facebook.imagepipeline.request.ImageRequest;
 
 import java.util.List;
 
-public class NewsListAdapter extends ArrayAdapter {
+public class NewsListAdapter extends ArrayAdapter<NewsEntity> {
     private static class ViewHolder {
         TextView newsTitle;
         DraweeView imageView;
@@ -27,11 +26,9 @@ public class NewsListAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NewsEntity newsEntity = (NewsEntity) getItem(position);
+        NewsEntity newsEntity = getItem(position);
         List<MediaEntity> mediaEntityList = newsEntity.getMediaEntity();
-        String thumbnailURL = "";
-        MediaEntity mediaEntity = mediaEntityList.get(0);
-        thumbnailURL = mediaEntity.getUrl();
+        String thumbnailURL = mediaEntityList.size() > 0 ? mediaEntityList.get(0).getUrl() : "";
 
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -45,8 +42,8 @@ public class NewsListAdapter extends ArrayAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.newsTitle.setText(newsEntity.getTitle());
-        DraweeController draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri
-                (Uri.parse(thumbnailURL))).setOldController(viewHolder.imageView.getController()).build();
+        DraweeController draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri(
+                thumbnailURL)).setOldController(viewHolder.imageView.getController()).build();
         viewHolder.imageView.setController(draweeController);
         return convertView;
     }
