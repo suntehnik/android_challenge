@@ -1,4 +1,4 @@
-package news.agoda.com.sample;
+package news.agoda.com.sample.main;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -27,6 +27,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import news.agoda.com.sample.detail.DetailViewActivity;
+import news.agoda.com.sample.main.adapters.NewsListAdapter;
+import news.agoda.com.sample.R;
+import news.agoda.com.sample.entity.NewsEntity;
 
 public class MainActivity
         extends ListActivity

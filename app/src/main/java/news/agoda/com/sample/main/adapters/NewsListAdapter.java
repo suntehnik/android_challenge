@@ -1,4 +1,4 @@
-package news.agoda.com.sample;
+package news.agoda.com.sample.main.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,10 @@ import com.facebook.drawee.view.DraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 
 import java.util.List;
+
+import news.agoda.com.sample.R;
+import news.agoda.com.sample.entity.MediaEntity;
+import news.agoda.com.sample.entity.NewsEntity;
 
 public class NewsListAdapter extends ArrayAdapter<NewsEntity> {
     private static class ViewHolder {

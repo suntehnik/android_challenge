@@ -1,4 +1,4 @@
-package news.agoda.com.sample;
+package news.agoda.com.sample.entity;
 
 import android.support.annotation.NonNull;
 import android.util.Log;

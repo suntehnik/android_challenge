@@ -7,6 +7,8 @@ import junit.framework.Assert;
 
 import org.json.JSONObject;
 
+import news.agoda.com.sample.entity.MediaEntity;
+
 /*
  * Copyright 2016 the original author or authors.
  *

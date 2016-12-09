@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import junit.framework.TestCase;
 
 import org.json.JSONObject;
+
+import news.agoda.com.sample.entity.NewsEntity;
 /*
  * Copyright 2016 the original author or authors.
  *
