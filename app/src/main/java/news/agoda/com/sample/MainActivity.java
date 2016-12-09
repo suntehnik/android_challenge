@@ -1,22 +1,23 @@
 package news.agoda.com.sample;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,7 +33,6 @@ public class MainActivity
         implements Callback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private List<NewsEntity> newsItemList;
     private Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
@@ -40,9 +40,6 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Fresco.initialize(this);
-
-        newsItemList = new ArrayList<>();
-
         loadResource(this);
     }
 
@@ -83,9 +80,9 @@ public class MainActivity
         }).start();
     }
 
-    private static String readStream(InputStream in) {
+    private String readStream(InputStream in) {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in));) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
             String nextLine = "";
             while ((nextLine = reader.readLine()) != null) {
@@ -101,6 +98,8 @@ public class MainActivity
         handler.postDelayed(new Runnable() {
             @Override public void run() {
                 JSONObject jsonObject;
+                List<NewsEntity> newsItemList = new ArrayList<>();
+
 
                 try {
                     jsonObject = new JSONObject(data);
@@ -122,9 +121,17 @@ public class MainActivity
 
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        NewsEntity newsEntity = newsItemList.get(position);
+                        NewsEntity newsEntity = ((NewsListAdapter) parent.getAdapter()).getItem(position);
                         String title = newsEntity.getTitle();
                         Intent intent = new Intent(MainActivity.this, DetailViewActivity.class);
+                        intent.putExtra("storyURL", newsEntity.getArticleUrl());
+                        intent.putExtra("summary", newsEntity.getSummary());
+                        if (newsEntity.getMediaEntity().size() > 0) {
+                            String imageUrl = newsEntity.getMediaEntity().get(0).getUrl();
+                            if (!TextUtils.isEmpty(imageUrl)) {
+                                intent.putExtra("imageURL", imageUrl);
+                            }
+                        }
                         intent.putExtra("title", title);
                         startActivity(intent);
                     }
