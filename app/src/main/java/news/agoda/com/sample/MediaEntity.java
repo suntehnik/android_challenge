@@ -16,6 +16,8 @@ public class MediaEntity {
     private String caption;
     private String copyright;
 
+    public MediaEntity() {}
+
     public MediaEntity(JSONObject jsonObject) throws JSONException {
         url = jsonObject.getString("url");
         format = jsonObject.getString("format");

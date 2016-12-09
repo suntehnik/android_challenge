@@ -1,5 +1,6 @@
 package news.agoda.com.sample;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -19,7 +20,10 @@ public class NewsEntity {
     private String articleUrl;
     private String byline;
     private String publishedDate;
+    @NonNull
     private List<MediaEntity> mediaEntityList;
+
+    public NewsEntity() {}
 
     public NewsEntity(JSONObject jsonObject) {
         try {
@@ -61,6 +65,7 @@ public class NewsEntity {
         return publishedDate;
     }
 
+    @NonNull
     public List<MediaEntity> getMediaEntity() {
         return mediaEntityList;
     }
