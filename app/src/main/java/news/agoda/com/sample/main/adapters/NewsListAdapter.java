@@ -1,6 +1,7 @@
 package news.agoda.com.sample.main.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +20,13 @@ import news.agoda.com.sample.entity.MediaEntity;
 import news.agoda.com.sample.entity.NewsEntity;
 
 public class NewsListAdapter extends ArrayAdapter<NewsEntity> {
-    private static class ViewHolder {
-        TextView newsTitle;
-        DraweeView imageView;
-    }
-
-    public NewsListAdapter(Context context, int resource, List objects) {
+    public NewsListAdapter(Context context, int resource, List<NewsEntity> objects) {
         super(context, resource, objects);
     }
 
+    @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NewsEntity newsEntity = getItem(position);
-        List<MediaEntity> mediaEntityList = newsEntity.getMediaEntity();
-        String thumbnailURL = mediaEntityList.size() > 0 ? mediaEntityList.get(0).getUrl() : "";
 
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -45,10 +39,28 @@ public class NewsListAdapter extends ArrayAdapter<NewsEntity> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.newsTitle.setText(newsEntity.getTitle());
+        String thumbnailURL;
+        String newsTitle;
+        NewsEntity newsEntity = getItem(position);
+
+        if (newsEntity == null) {
+            newsTitle = "";
+            thumbnailURL = "";
+        } else {
+            newsTitle = newsEntity.getTitle();
+            List<MediaEntity> mediaEntityList = newsEntity.getMediaEntity();
+            thumbnailURL = mediaEntityList.size() > 0 ? mediaEntityList.get(0).getUrl() : "";
+        }
+
+        viewHolder.newsTitle.setText(newsTitle);
         DraweeController draweeController = Fresco.newDraweeControllerBuilder().setImageRequest(ImageRequest.fromUri(
                 thumbnailURL)).setOldController(viewHolder.imageView.getController()).build();
         viewHolder.imageView.setController(draweeController);
         return convertView;
+    }
+
+    private static class ViewHolder {
+        TextView   newsTitle;
+        DraweeView imageView;
     }
 }

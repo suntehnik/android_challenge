@@ -38,7 +38,7 @@ public class MainActivity
         implements Callback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class MainActivity
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
 
-            String nextLine = "";
+            String nextLine;
             while ((nextLine = reader.readLine()) != null) {
                 sb.append(nextLine);
             }
@@ -127,6 +127,9 @@ public class MainActivity
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         NewsEntity newsEntity = ((NewsListAdapter) parent.getAdapter()).getItem(position);
+                        if (newsEntity == null) {
+                            return;
+                        }
                         String title = newsEntity.getTitle();
                         Intent intent = new Intent(MainActivity.this, DetailViewActivity.class);
                         intent.putExtra("storyURL", newsEntity.getArticleUrl());

@@ -1,38 +1,45 @@
 package news.agoda.com.sample.entity;
 
-import org.json.JSONException;
+import android.support.annotation.Nullable;
+
 import org.json.JSONObject;
 
 /**
  * This class represents a media item
  */
 public class MediaEntity {
+    @Nullable
     private String url;
+    @Nullable
     private String format;
     private int height;
     private int width;
+    @Nullable
     private String type;
+    @Nullable
     private String subType;
+    @Nullable
     private String caption;
+    @Nullable
     private String copyright;
 
-    public MediaEntity() {}
-
-    public MediaEntity(JSONObject jsonObject) throws JSONException {
-        url = jsonObject.getString("url");
-        format = jsonObject.getString("format");
-        height = jsonObject.getInt("height");
-        width = jsonObject.getInt("width");
-        type = jsonObject.getString("type");
-        subType = jsonObject.getString("subtype");
-        caption = jsonObject.getString("caption");
-        copyright = jsonObject.getString("copyright");
+    public MediaEntity(JSONObject jsonObject) {
+        url = jsonObject.optString("url");
+        format = jsonObject.optString("format");
+        height = jsonObject.optInt("height");
+        width = jsonObject.optInt("width");
+        type = jsonObject.optString("type");
+        subType = jsonObject.optString("subtype");
+        caption = jsonObject.optString("caption");
+        copyright = jsonObject.optString("copyright");
     }
 
+    @Nullable
     public String getUrl() {
         return url;
     }
 
+    @Nullable
     public String getFormat() {
         return format;
     }
@@ -45,18 +52,22 @@ public class MediaEntity {
         return width;
     }
 
+    @Nullable
     public String getType() {
         return type;
     }
 
+    @Nullable
     public String getSubType() {
         return subType;
     }
 
+    @Nullable
     public String getCaption() {
         return caption;
     }
 
+    @Nullable
     public String getCopyright() {
         return copyright;
     }

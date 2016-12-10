@@ -20,6 +20,6 @@
         android:paddingStart="10dp"
         android:paddingRight="10dp"
         android:paddingEnd="10dp"
-        android:text="asdasdasdasdadasdasda"/>
+        android:text=""/>
 
 </LinearLayout>
