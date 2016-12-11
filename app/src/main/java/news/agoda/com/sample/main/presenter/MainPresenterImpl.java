@@ -11,7 +11,7 @@ import news.agoda.com.sample.entity.NewsEntity;
 import news.agoda.com.sample.main.MainView;
 import news.agoda.com.sample.main.data.DataCallback;
 import news.agoda.com.sample.main.data.DataSource;
-import news.agoda.com.sample.main.iteractor.MainViewRouterImpl;
+import news.agoda.com.sample.main.iteractor.MainRouter;
 
 /**
  * Created by dvaletin on 11.12.16.
@@ -23,13 +23,13 @@ public class MainPresenterImpl implements DataCallback<NewsEntity> {
     private DataSource<NewsEntity> dataSource;
 
     @NonNull
-    private MainViewRouterImpl router;
+    private MainRouter router;
     @Nullable
-    private MainView mainView;
+    private MainView   mainView;
 
-    public MainPresenterImpl(@NonNull DataSource<NewsEntity> dataSource, @NonNull final MainView mainView) {
+    public MainPresenterImpl(@NonNull DataSource<NewsEntity> dataSource, @NonNull MainRouter router, @NonNull final MainView mainView) {
         this.dataSource = dataSource;
-        this.router = new MainViewRouterImpl();
+        this.router = router;
         this.mainView = mainView;
     }
 
@@ -63,7 +63,7 @@ public class MainPresenterImpl implements DataCallback<NewsEntity> {
 
     public void onListItemClick(final NewsEntity newsEntity) {
         if (mainView != null) {
-            router.onListItemClick(mainView.getActivity(), newsEntity);
+            router.onNavigateToDetails(mainView.getActivity(), newsEntity);
         }
     }
 }

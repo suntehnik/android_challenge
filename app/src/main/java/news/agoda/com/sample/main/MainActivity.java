@@ -2,6 +2,8 @@ package news.agoda.com.sample.main;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.os.Build.VERSION;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +21,9 @@ import news.agoda.com.sample.entity.NewsEntity;
 import news.agoda.com.sample.main.adapters.NewsListAdapter;
 import news.agoda.com.sample.main.data.DataSource;
 import news.agoda.com.sample.main.data.NewsDataSourceImpl;
+import news.agoda.com.sample.main.iteractor.ActivityMainRouterImpl;
+import news.agoda.com.sample.main.iteractor.FragmentMainRouterImpl;
+import news.agoda.com.sample.main.iteractor.MainRouter;
 import news.agoda.com.sample.main.presenter.MainPresenterImpl;
 
 public class MainActivity
@@ -33,7 +38,15 @@ public class MainActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DataSource<NewsEntity> dataSource = new NewsDataSourceImpl(new Handler(Looper.getMainLooper()));
-        presenter = new MainPresenterImpl(dataSource, this);
+        // R.id.detailContainer view exists only on devices with more than 600dp width in landscape mode
+        // If android OS version is above 3.0 (Honeycomb, i.e. fragments are supported and detailContainer exists
+        // use fragments router, otherwise - activity router
+        // FragmentMainRouterImpl will open details in fragment
+        // ActivityMainRouterImpl will open details in activity
+        MainRouter router =
+                (findViewById(R.id.detailContainer) != null && VERSION.SDK_INT >= VERSION_CODES.HONEYCOMB) ?
+                        new FragmentMainRouterImpl() : new ActivityMainRouterImpl();
+        presenter = new MainPresenterImpl(dataSource, router, this);
         presenter.loadResource();
     }
 

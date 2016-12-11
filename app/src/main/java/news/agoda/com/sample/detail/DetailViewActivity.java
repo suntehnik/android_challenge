@@ -16,14 +16,15 @@ import com.facebook.imagepipeline.request.ImageRequest;
 
 import news.agoda.com.sample.R;
 
+import static news.agoda.com.sample.detail.Constants.PARAM_IMAGE_URL;
+import static news.agoda.com.sample.detail.Constants.PARAM_STORY_URL;
+import static news.agoda.com.sample.detail.Constants.PARAM_SUMMARY;
+import static news.agoda.com.sample.detail.Constants.PARAM_TITLE;
+
 /**
  * News detail view
  */
 public class DetailViewActivity extends Activity {
-    private static final String PARAM_IMAGE_URL = "imageURL";
-    private static final String PARAM_STORY_URL = "storyURL";
-    private static final String PARAM_SUMMARY   = "summary";
-    private static final String PARAM_TITLE     = "title";
     private              String storyURL        = null;
 
 
